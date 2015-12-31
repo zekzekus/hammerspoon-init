@@ -6,7 +6,7 @@ I'll just explain how to use my "init.lua" file, if you don't want spending time
 
 # Download
 
-The init.lua is [here](https://github.com/rtoshiro/hammerspoon-init/blob/master/init.lua). Please share with me if you improve it :)
+The source of this init.lua is [here](https://github.com/rtoshiro/hammerspoon-init/blob/master/init.lua). I just forked and modified with my own taste.
 
 # Configuration
 
@@ -19,33 +19,37 @@ Open ```init.lua``` file and edit lines 12 and 13 with the name of your first an
 
 # Shortcuts
 
-	cmd + alt + right key
-	cmd + alt + left key
-	cmd + alt + up key
-	cmd + alt + down key
+    Different from toshiro's approach, i am using ```fn``` key as ```hyper```
+    key. I used Karabiner for this purpose. Now i am using ```hyper``` as my
+    primary modifier and ```cmd+alt+ctrl``` for shortcuts that i use less.
+
+	hyper + right key
+	hyper + left key
+	hyper + up key
+	hyper + down key
 	ctrl + cmd + alt + right key
 	ctrl + cmd + alt + left key
 	ctrl + cmd + alt + up key
 	ctrl + cmd + alt + down key
-	cmd + alt + c
+	hyper + c
 	ctrl + cmd + alt + c
-	cmd + alt + f
+	hyper + f
 	ctrl + cmd + alt + f
 
-	ctrl + cmd + alt + r (reloads init.lua file)
-	ctrl + cmd + alt + 1 (moves focused window to second_monitor)
-	ctrl + cmd + alt + 2 (moves focused window to main_monitor)
-	ctrl + cmd + alt + 3 (applies all layouts)
-	ctrl + cmd + alt + 4 (applies only one layout (focused one))
+	hyper + r (reloads init.lua file)
+	hyper + 1 (moves focused window to second_monitor)
+	hyper + 2 (moves focused window to main_monitor)
+	hyper + 3 (applies all layouts)
+	hyper + 4 (applies only one layout (focused one))
 
 	ctrl + cmd + alt + P (closes all applications defined by closeAll variable at line 205)
-	ctrl + cmd + alt + P (open all applications defined by openAll variable at line 222)
+	ctrl + cmd + alt + O (open all applications defined by openAll variable at line 222)
 
 # Layouts:
 
 You can configure the variable "layouts" (line 32) according your monitor configuration.
 
-### The sintax is:
+### The syntax is:
 
 ```
   {
@@ -68,7 +72,7 @@ You can configure the variable "layouts" (line 32) according your monitor config
   },
 ```
 
-If you call "ctrl + cmd + alt + 3", it will apply all layouts you defined.
+If you call "hyper + 3", it will apply all layouts you defined.
 
-If you call "ctrl + cmd + alt + 4", the layout will be applied only on the focused application.
+If you call "hyper + 4", the layout will be applied only on the focused application.
 
