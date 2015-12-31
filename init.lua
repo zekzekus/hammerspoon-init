@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
--- rtoshiro - https://github.com/rtoshiro
+-- zekzekus - https://github.com/zekzekus
+-- Forked from: rtoshiro - https://github.com/rtoshiro/hammerspoon-init.git
 -- You should see: http://www.hammerspoon.org/docs/index.html
 --------------------------------------------------------------------------------
 
@@ -7,7 +8,7 @@
 --------------------------------------------------------------------------------
 -- CONSTANTS
 --------------------------------------------------------------------------------
-local cmd_alt = {"cmd", "alt"}
+local hyper = {"shift", "cmd", "alt", "ctrl"}
 local cmd_alt_ctrl = {"cmd", "alt", "ctrl"}
 local main_monitor = "Color LCD"
 local second_monitor = "DELL E2310H"
@@ -31,103 +32,10 @@ hs.window.animationDuration = 0
 --------------------------------------------------------------------------------
 local layouts = {
   {
-    name = {"Airmail", "Calendar", "iTunes", "Last.fm Scrobbler", "Messages", "Skype", "Dash", "Yummy FTP"},
+    name = {"Google Chrome", "Calendar", "Spotify", "Hipchat", "Evernote", "Slack"},
     func = function(index, win)
       win:moveToScreen(hs.screen.get(main_monitor))
       win:maximize()
-    end
-  },
-  {
-    name = {"TextWrangler"},
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
-        hs.window.fullscreenAlmostCenter(win)
-      else
-        win:maximize()
-      end
-    end
-  },
-  {
-    name = {"Cocoa Rest Client", "MacDown", "Firefox"},
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
-        hs.window.fullscreenCenter(win)
-      else
-        win:maximize()
-      end
-    end
-  },
-  {
-    name = {"Evernote", "JSON Accelerator", "Preview", "Slack"},
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
-        hs.window.fullscreenCenter(win)
-      else
-        win:maximize()
-      end
-    end
-  },
-  {
-    name = {"Android Studio", "Xcode", "SourceTree"},
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
-        hs.window.fullscreenWidth(win)
-      else
-        win:maximize()
-      end
-    end
-  },
-  {
-    name = "Finder",
-    func = function(index, win)
-
-      if (index == 1) then
-        if (#hs.screen.allScreens() > 1) then
-          win:moveToScreen(hs.screen.get(second_monitor))
-        end
-
-        win:upLeft()
-      elseif (index == 2) then
-        if (#hs.screen.allScreens() > 1) then
-          win:moveToScreen(hs.screen.get(second_monitor))
-        end
-
-        win:downLeft()
-      elseif (index == 3) then
-        if (#hs.screen.allScreens() > 1) then
-          win:moveToScreen(hs.screen.get(second_monitor))
-        end
-
-        win:downRight()
-      elseif (index == 4) then
-        if (#hs.screen.allScreens() > 1) then
-          win:moveToScreen(hs.screen.get(second_monitor))
-        end
-
-        win:upRight()
-      elseif (index == 5) then
-        win:moveToScreen(hs.screen.get(main_monitor))
-
-        win:upLeft()
-      elseif (index == 6) then
-        win:moveToScreen(hs.screen.get(main_monitor))
-
-        win:downLeft()
-      elseif (index == 7) then
-        win:moveToScreen(hs.screen.get(main_monitor))
-
-        win:downRight()
-      elseif (index == 8) then
-        win:moveToScreen(hs.screen.get(main_monitor))
-
-        win:upRight()
-      else
-        win:close()
-      end
     end
   },
   {
@@ -143,136 +51,70 @@ local layouts = {
         win:right()
       end
     end
-  },
-  {
-    name = "iOS Simulator",
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
-      end
-
-      local screen = win:screen()
-      local screen_frame = screen:frame()
-      local frame = win:frame()
-      frame.x = screen_frame.w / 2
-      frame.y = screen_frame.y
-      win:setFrame(frame)
-    end
-  },
-  {
-    name = "Genymotion",
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
-      end
-
-      local screen = win:screen()
-      local screen_frame = screen:frame()
-      local frame = win:frame()
-      frame.x = screen_frame.w / 2
-      frame.y = screen_frame.y + 50
-      frame.w = screen_frame.w / 3
-      frame.h = screen_frame.h / 2
-      win:setFrame(frame)
-    end
-  },
-  {
-    name = {"Atom", "Light Table"},
-    func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-
-        local allScreens = hs.screen.allScreens()
-        for i, screen in ipairs(allScreens) do
-          if screen:name() == second_monitor then
-            win:moveToScreen(screen)
-          end
-        end
-
-        local screen = win:screen()
-        win:setFrame({
-          x = screen:frame().x,
-          y = hs.screen.minY(screen),
-          w = hs.screen.minWidth(false) + hs.screen.minX(screen),
-          h = hs.screen.minHeight(screen)
-        })
-      else
-        win:maximize()
-      end
-    end
-  },
+  }
 }
 
 local closeAll = {
+  "Google Chrome",
+  "Calendar",
+  "Spotify",
+  "Hipchat",
+  "Evernote",
+  "Slack",
   "iTunes",
-  "Skype",
   "Messages",
-  "XCode",
-  "Android Studio",
-  "Simulator",
-  "Word",
-  "Excel",
-  "TextWrangler",
-  "Cocoa Rest Client",
-  "Last.fm",
   "Preview",
-  "JSON Accelerator",
-  "Yummy FTP",
-  "player",
-  "FileMerge",
-  "Fabric",
-  "Color Picker"
 }
 
 local openAll = {
-  "iTunes",
-  "Skype",
-  "Messages",
-  "Last.fm"
+  "Google Chrome",
+  "Hipchat",
+  "iTerm"
 }
 
 
 function config()
-  hs.hotkey.bind(cmd_alt, "right", function()
+  hs.hotkey.bind(hyper, "l", function()
     local win = hs.window.focusedWindow()
     win:right()
   end)
 
-  hs.hotkey.bind(cmd_alt, "left", function()
+  hs.hotkey.bind(hyper, "h", function()
     local win = hs.window.focusedWindow()
     win:left()
   end)
 
-  hs.hotkey.bind(cmd_alt, "up", function()
+  hs.hotkey.bind(hyper, "k", function()
     local win = hs.window.focusedWindow()
     win:up()
   end)
 
-  hs.hotkey.bind(cmd_alt, "down", function()
+  hs.hotkey.bind(hyper, "j", function()
     local win = hs.window.focusedWindow()
     win:down()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "left", function()
+  hs.hotkey.bind(cmd_alt_ctrl, "h", function()
     local win = hs.window.focusedWindow()
     win:upLeft()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "down", function()
+  hs.hotkey.bind(cmd_alt_ctrl, "j", function()
     local win = hs.window.focusedWindow()
     win:downLeft()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "right", function()
+  hs.hotkey.bind(cmd_alt_ctrl, "k", function()
     local win = hs.window.focusedWindow()
     win:downRight()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "up", function()
+  hs.hotkey.bind(cmd_alt_ctrl, "l", function()
     local win = hs.window.focusedWindow()
     win:upRight()
   end)
 
-  hs.hotkey.bind(cmd_alt, "c", function()
+  hs.hotkey.bind(hyper, "c", function()
     local win = hs.window.focusedWindow()
     hs.window.fullscreenCenter(win)
   end)
@@ -282,7 +124,7 @@ function config()
     hs.window.fullscreenAlmostCenter(win)
   end)
 
-  hs.hotkey.bind(cmd_alt, "f", function()
+  hs.hotkey.bind(hyper, "f", function()
     local win = hs.window.focusedWindow()
     win:maximize()
   end)
@@ -294,30 +136,30 @@ function config()
     end
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "h", function()
+  hs.hotkey.bind(hyper, "i", function()
     hs.hints.windowHints()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "1", function()
+  hs.hotkey.bind(hyper, "1", function()
     local win = hs.window.focusedWindow()
     if (win) then
       win:moveToScreen(hs.screen.get(second_monitor))
     end
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "2", function()
+  hs.hotkey.bind(hyper, "2", function()
     local win = hs.window.focusedWindow()
     if (win) then
       win:moveToScreen(hs.screen.get(main_monitor))
     end
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "R", function()
+  hs.hotkey.bind(hyper, "r", function()
     hs.reload()
-    hs.alert.show("Config loaded")
+    hs.alert.show("Config loaded!")
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "P", function()
+  hs.hotkey.bind(cmd_alt_ctrl, "p", function()
     hs.alert.show("Closing")
     for i,v in ipairs(closeAll) do
       local app = hs.application(v)
@@ -332,7 +174,7 @@ function config()
     end
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "O", function()
+  hs.hotkey.bind(cmd_alt_ctrl, "o", function()
     hs.alert.show("Openning")
     for i,v in ipairs(openAll) do
       hs.alert.show(v)
@@ -340,11 +182,11 @@ function config()
     end
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "3", function()
+  hs.hotkey.bind(hyper, "3", function()
     applyLayouts(layouts)
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "4", function()
+  hs.hotkey.bind(hyper, "4", function()
 
     local focusedWindow = hs.window.focusedWindow()
     local app = focusedWindow:application()
@@ -356,15 +198,6 @@ end
 --------------------------------------------------------------------------------
 -- END CONFIGURATIONS
 --------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
 
 --------------------------------------------------------------------------------
 -- METHODS - BECAREFUL :)
