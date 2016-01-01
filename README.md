@@ -19,9 +19,7 @@ Open ```init.lua``` file and edit lines 12 and 13 with the name of your first an
 
 # Shortcuts
 
-    Different from toshiro's approach, i am using ```fn``` key as ```hyper```
-    key. I used Karabiner for this purpose. Now i am using ```hyper``` as my
-    primary modifier and ```cmd+alt+ctrl``` for shortcuts that i use less.
+Different from toshiro's approach, i am using ```fn``` key as ```hyper``` key. I used Karabiner for this purpose. Now i am using ```hyper``` as my primary modifier and ```cmd+alt+ctrl``` for shortcuts that i use less.
 
 	hyper + right key
 	hyper + left key
