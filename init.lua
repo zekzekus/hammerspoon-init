@@ -17,6 +17,7 @@ local second_monitor = "DELL E2310H"
 -- CONFIGURATIONS
 --------------------------------------------------------------------------------
 hs.window.animationDuration = 0
+hs.window.setShadow(false)
 
 --------------------------------------------------------------------------------
 -- LAYOUTS
