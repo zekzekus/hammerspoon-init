@@ -6,6 +6,17 @@
 
 
 --------------------------------------------------------------------------------
+-- KIND OF IMPORTS
+--------------------------------------------------------------------------------
+local window = require "hs.window"
+local screen = require "hs.screen"
+local hotkey = require "hs.hotkey"
+local hints = require "hs.hints"
+local application = require "hs.application"
+local alert = require "hs.alert"
+local appfinder = require "hs.appfinder"
+
+--------------------------------------------------------------------------------
 -- CONSTANTS
 --------------------------------------------------------------------------------
 local hyper = {"shift", "cmd", "alt", "ctrl"}
@@ -16,8 +27,8 @@ local second_monitor = "DELL E2310H"
 --------------------------------------------------------------------------------
 -- CONFIGURATIONS
 --------------------------------------------------------------------------------
-hs.window.animationDuration = 0
-hs.window.setShadow(false)
+window.animationDuration = 0
+window.setShadows(false)
 
 --------------------------------------------------------------------------------
 -- LAYOUTS
@@ -35,15 +46,15 @@ local layouts = {
   {
     name = {"Google Chrome", "Calendar", "Spotify", "Hipchat", "Evernote", "Slack"},
     func = function(index, win)
-      win:moveToScreen(hs.screen.get(main_monitor))
+      win:moveToScreen(screen.get(main_monitor))
       win:maximize()
     end
   },
   {
     name = "iTerm",
     func = function(index, win)
-      if (#hs.screen.allScreens() > 1) then
-        win:moveToScreen(hs.screen.get(second_monitor))
+      if (#screen.allScreens() > 1) then
+        win:moveToScreen(screen.get(second_monitor))
       end
 
       if (index == 1) then
@@ -75,98 +86,98 @@ local openAll = {
 
 
 function config()
-  hs.hotkey.bind(hyper, "l", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "l", function()
+    local win = window.focusedWindow()
     win:right()
   end)
 
-  hs.hotkey.bind(hyper, "h", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "h", function()
+    local win = window.focusedWindow()
     win:left()
   end)
 
-  hs.hotkey.bind(hyper, "k", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "k", function()
+    local win = window.focusedWindow()
     win:up()
   end)
 
-  hs.hotkey.bind(hyper, "j", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "j", function()
+    local win = window.focusedWindow()
     win:down()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "h", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(cmd_alt_ctrl, "h", function()
+    local win = window.focusedWindow()
     win:upLeft()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "j", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(cmd_alt_ctrl, "j", function()
+    local win = window.focusedWindow()
     win:downLeft()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "k", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(cmd_alt_ctrl, "k", function()
+    local win = window.focusedWindow()
     win:downRight()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "l", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(cmd_alt_ctrl, "l", function()
+    local win = window.focusedWindow()
     win:upRight()
   end)
 
-  hs.hotkey.bind(hyper, "c", function()
-    local win = hs.window.focusedWindow()
-    hs.window.fullscreenCenter(win)
+  hotkey.bind(hyper, "c", function()
+    local win = window.focusedWindow()
+    window.fullscreenCenter(win)
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "c", function()
-    local win = hs.window.focusedWindow()
-    hs.window.fullscreenAlmostCenter(win)
+  hotkey.bind(cmd_alt_ctrl, "c", function()
+    local win = window.focusedWindow()
+    window.fullscreenAlmostCenter(win)
   end)
 
-  hs.hotkey.bind(hyper, "f", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "f", function()
+    local win = window.focusedWindow()
     win:maximize()
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "f", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(cmd_alt_ctrl, "f", function()
+    local win = window.focusedWindow()
     if (win) then
-      hs.window.fullscreenWidth(win)
+      window.fullscreenWidth(win)
     end
   end)
 
-  hs.hotkey.bind(hyper, "i", function()
-    hs.hints.windowHints()
+  hotkey.bind(hyper, "i", function()
+    hints.windowHints()
   end)
 
-  hs.hotkey.bind(hyper, "1", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "1", function()
+    local win = window.focusedWindow()
     if (win) then
-      win:moveToScreen(hs.screen.get(second_monitor))
+      win:moveToScreen(screen.get(second_monitor))
     end
   end)
 
-  hs.hotkey.bind(hyper, "2", function()
-    local win = hs.window.focusedWindow()
+  hotkey.bind(hyper, "2", function()
+    local win = window.focusedWindow()
     if (win) then
-      win:moveToScreen(hs.screen.get(main_monitor))
+      win:moveToScreen(screen.get(main_monitor))
     end
   end)
 
-  hs.hotkey.bind(hyper, "r", function()
+  hotkey.bind(hyper, "r", function()
     hs.reload()
-    hs.alert.show("Config loaded!")
+    alert.show("Config loaded!")
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "p", function()
-    hs.alert.show("Closing")
+  hotkey.bind(cmd_alt_ctrl, "p", function()
+    alert.show("Closing")
     for i,v in ipairs(closeAll) do
-      local app = hs.application(v)
+      local app = application(v)
       if (app) then
         if (app.name) then
-          hs.alert.show(app:name())
+          alert.show(app:name())
         end
         if (app.kill) then
         app:kill()
@@ -175,21 +186,21 @@ function config()
     end
   end)
 
-  hs.hotkey.bind(cmd_alt_ctrl, "o", function()
-    hs.alert.show("Openning")
+  hotkey.bind(cmd_alt_ctrl, "o", function()
+    alert.show("Openning")
     for i,v in ipairs(openAll) do
-      hs.alert.show(v)
-      hs.application.open(v)
+      alert.show(v)
+      application.open(v)
     end
   end)
 
-  hs.hotkey.bind(hyper, "3", function()
+  hotkey.bind(hyper, "3", function()
     applyLayouts(layouts)
   end)
 
-  hs.hotkey.bind(hyper, "4", function()
+  hotkey.bind(hyper, "4", function()
 
-    local focusedWindow = hs.window.focusedWindow()
+    local focusedWindow = window.focusedWindow()
     local app = focusedWindow:application()
     if (app) then
       applyLayout(layouts, app)
@@ -240,7 +251,7 @@ function applyLayouts(layouts)
   for i, layout in ipairs(layouts) do
     if (type(layout.name) == "table") then
       for i, appName in ipairs(layout.name) do
-        local app = hs.appfinder.appFromName(appName)
+        local app = appfinder.appFromName(appName)
         if (app) then
           local wins = app:allWindows()
           local counter = 1
@@ -253,7 +264,7 @@ function applyLayouts(layouts)
         end
       end
     elseif (type(layout.name) == "string") then
-      local app = hs.appfinder.appFromName(layout.name)
+      local app = appfinder.appFromName(layout.name)
       if (app) then
         local wins = app:allWindows()
         local counter = 1
@@ -268,8 +279,8 @@ function applyLayouts(layouts)
   end
 end
 
-function hs.screen.get(screen_name)
-  local allScreens = hs.screen.allScreens()
+function screen.get(screen_name)
+  local allScreens = screen.allScreens()
   for i, screen in ipairs(allScreens) do
     if screen:name() == screen_name then
       return screen
@@ -280,9 +291,9 @@ end
 -- Returns the width of the smaller screen size
 -- isFullscreen = false removes the toolbar
 -- and dock sizes
-function hs.screen.minWidth(isFullscreen)
+function screen.minWidth(isFullscreen)
   local min_width = math.maxinteger
-  local allScreens = hs.screen.allScreens()
+  local allScreens = screen.allScreens()
   for i, screen in ipairs(allScreens) do
     local screen_frame = screen:frame()
     if (isFullscreen) then
@@ -296,9 +307,9 @@ end
 -- isFullscreen = false removes the toolbar
 -- and dock sizes
 -- Returns the height of the smaller screen size
-function hs.screen.minHeight(isFullscreen)
+function screen.minHeight(isFullscreen)
   local min_height = math.maxinteger
-  local allScreens = hs.screen.allScreens()
+  local allScreens = screen.allScreens()
   for i, screen in ipairs(allScreens) do
     local screen_frame = screen:frame()
     if (isFullscreen) then
@@ -313,11 +324,11 @@ end
 -- considering the reference screen minus smaller screen
 -- = (MAX_REFSCREEN_WIDTH - MIN_AVAILABLE_WIDTH) / 2
 -- If using only one monitor, returns the X of ref screen
-function hs.screen.minX(refScreen)
+function screen.minX(refScreen)
   local min_x = refScreen:frame().x
-  local allScreens = hs.screen.allScreens()
+  local allScreens = screen.allScreens()
   if (#allScreens > 1) then
-    min_x = refScreen:frame().x + ((refScreen:frame().w - hs.screen.minWidth()) / 2)
+    min_x = refScreen:frame().x + ((refScreen:frame().w - screen.minWidth()) / 2)
   end
   return min_x
 end
@@ -326,11 +337,11 @@ end
 -- considering the focused screen minus smaller screen
 -- = (MAX_REFSCREEN_HEIGHT - MIN_AVAILABLE_HEIGHT) / 2
 -- If using only one monitor, returns the Y of focused screen
-function hs.screen.minY(refScreen)
+function screen.minY(refScreen)
   local min_y = refScreen:frame().y
-  local allScreens = hs.screen.allScreens()
+  local allScreens = screen.allScreens()
   if (#allScreens > 1) then
-    min_y = refScreen:frame().y + ((refScreen:frame().h - hs.screen.minHeight()) / 2)
+    min_y = refScreen:frame().y + ((refScreen:frame().h - screen.minHeight()) / 2)
   end
   return min_y
 end
@@ -339,11 +350,11 @@ end
 -- half of minX and 0
 -- = ((MAX_REFSCREEN_WIDTH - MIN_AVAILABLE_WIDTH) / 2) / 2
 -- If using only one monitor, returns the X of ref screen
-function hs.screen.almostMinX(refScreen)
+function screen.almostMinX(refScreen)
   local min_x = refScreen:frame().x
-  local allScreens = hs.screen.allScreens()
+  local allScreens = screen.allScreens()
   if (#allScreens > 1) then
-    min_x = refScreen:frame().x + (((refScreen:frame().w - hs.screen.minWidth()) / 2) - ((refScreen:frame().w - hs.screen.minWidth()) / 4))
+    min_x = refScreen:frame().x + (((refScreen:frame().w - screen.minWidth()) / 2) - ((refScreen:frame().w - screen.minWidth()) / 4))
   end
   return min_x
 end
@@ -352,11 +363,11 @@ end
 -- half of minY and 0
 -- = ((MAX_REFSCREEN_HEIGHT - MIN_AVAILABLE_HEIGHT) / 2) / 2
 -- If using only one monitor, returns the Y of ref screen
-function hs.screen.almostMinY(refScreen)
+function screen.almostMinY(refScreen)
   local min_y = refScreen:frame().y
-  local allScreens = hs.screen.allScreens()
+  local allScreens = screen.allScreens()
   if (#allScreens > 1) then
-    min_y = refScreen:frame().y + (((refScreen:frame().h - hs.screen.minHeight()) / 2) - ((refScreen:frame().h - hs.screen.minHeight()) / 4))
+    min_y = refScreen:frame().y + (((refScreen:frame().h - screen.minHeight()) / 2) - ((refScreen:frame().h - screen.minHeight()) / 4))
   end
   return min_y
 end
@@ -365,12 +376,12 @@ end
 -- considering the context of refScreen
 -- isFullscreen = false removes the toolbar
 -- and dock sizes
-function hs.screen.minFrame(refScreen, isFullscreen)
+function screen.minFrame(refScreen, isFullscreen)
   return {
-    x = hs.screen.minX(refScreen),
-    y = hs.screen.minY(refScreen),
-    w = hs.screen.minWidth(isFullscreen),
-    h = hs.screen.minHeight(isFullscreen)
+    x = screen.minX(refScreen),
+    y = screen.minY(refScreen),
+    w = screen.minWidth(isFullscreen),
+    h = screen.minHeight(isFullscreen)
   }
 end
 
@@ -379,8 +390,8 @@ end
 -- |        |  HERE  |
 -- |        |        |
 -- +-----------------+
-function hs.window.right(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.right(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   minFrame.x = minFrame.x + (minFrame.w/2)
   minFrame.w = minFrame.w/2
   win:setFrame(minFrame)
@@ -391,8 +402,8 @@ end
 -- |  HERE  |        |
 -- |        |        |
 -- +-----------------+
-function hs.window.left(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.left(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   minFrame.w = minFrame.w/2
   win:setFrame(minFrame)
 end
@@ -402,8 +413,8 @@ end
 -- +-----------------+
 -- |                 |
 -- +-----------------+
-function hs.window.up(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.up(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   minFrame.h = minFrame.h/2
   win:setFrame(minFrame)
 end
@@ -413,8 +424,8 @@ end
 -- +-----------------+
 -- |      HERE       |
 -- +-----------------+
-function hs.window.down(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.down(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   minFrame.y = minFrame.y + minFrame.h/2
   minFrame.h = minFrame.h/2
   win:setFrame(minFrame)
@@ -425,8 +436,8 @@ end
 -- +--------+        |
 -- |                 |
 -- +-----------------+
-function hs.window.upLeft(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.upLeft(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   minFrame.w = minFrame.w/2
   minFrame.h = minFrame.h/2
   win:setFrame(minFrame)
@@ -437,8 +448,8 @@ end
 -- +--------+        |
 -- |  HERE  |        |
 -- +-----------------+
-function hs.window.downLeft(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.downLeft(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   win:setFrame({
     x = minFrame.x,
     y = minFrame.y + minFrame.h/2,
@@ -452,8 +463,8 @@ end
 -- |        +--------|
 -- |        |  HERE  |
 -- +-----------------+
-function hs.window.downRight(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.downRight(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   win:setFrame({
     x = minFrame.x + minFrame.w/2,
     y = minFrame.y + minFrame.h/2,
@@ -467,8 +478,8 @@ end
 -- |        +--------|
 -- |                 |
 -- +-----------------+
-function hs.window.upRight(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.upRight(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   win:setFrame({
     x = minFrame.x + minFrame.w/2,
     y = minFrame.y,
@@ -486,8 +497,8 @@ end
 -- +------------------+
 -- Where the window's size is equal to
 -- the smaller available screen size
-function hs.window.fullscreenCenter(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.fullscreenCenter(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   win:setFrame(minFrame)
 end
 
@@ -498,13 +509,13 @@ end
 -- |  +------------+  |
 -- |                  |
 -- +------------------+
-function hs.window.fullscreenAlmostCenter(win)
-  local offsetW = hs.screen.minX(win:screen()) - hs.screen.almostMinX(win:screen())
+function window.fullscreenAlmostCenter(win)
+  local offsetW = screen.minX(win:screen()) - screen.almostMinX(win:screen())
   win:setFrame({
-    x = hs.screen.almostMinX(win:screen()),
-    y = hs.screen.minY(win:screen()),
-    w = hs.screen.minWidth(isFullscreen) + (2 * offsetW),
-    h = hs.screen.minHeight(isFullscreen)
+    x = screen.almostMinX(win:screen()),
+    y = screen.minY(win:screen()),
+    w = screen.minWidth(isFullscreen) + (2 * offsetW),
+    h = screen.minHeight(isFullscreen)
   })
 end
 
@@ -516,8 +527,8 @@ end
 -- +------------------+--> minHeight
 -- |                  |
 -- +------------------+
-function hs.window.fullscreenWidth(win)
-  local minFrame = hs.screen.minFrame(win:screen(), false)
+function window.fullscreenWidth(win)
+  local minFrame = screen.minFrame(win:screen(), false)
   win:setFrame({
     x = win:screen():frame().x,
     y = minFrame.y,
@@ -527,7 +538,7 @@ function hs.window.fullscreenWidth(win)
 end
 
 function applicationWatcher(appName, eventType, appObject)
-  if (eventType == hs.application.watcher.activated) then
+  if (eventType == application.watcher.activated) then
     if (appName == "iTerm") then
         appObject:selectMenuItem({"Window", "Bring All to Front"})
     elseif (appName == "Finder") then
@@ -535,12 +546,12 @@ function applicationWatcher(appName, eventType, appObject)
     end
   end
 
-  if (eventType == hs.application.watcher.launched) then
+  if (eventType == application.watcher.launched) then
     os.execute("sleep " .. tonumber(3))
     applyLayout(layouts, appObject)
   end
 end
 
 config()
-local appWatcher = hs.application.watcher.new(applicationWatcher)
+local appWatcher = application.watcher.new(applicationWatcher)
 appWatcher:start()
